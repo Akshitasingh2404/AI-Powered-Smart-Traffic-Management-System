@@ -1,0 +1,11 @@
+Validation Accuracy: 96.70%
+              precision    recall  f1-score   support
+
+  No Traffic       0.83      0.99      0.90        86
+       Light       0.97      0.91      0.94       250
+    Moderate       0.97      0.97      0.97       231
+       Heavy       1.00      1.00      1.00       433
+
+    accuracy                           0.97      1000
+   macro avg       0.94      0.97      0.95      1000
+weighted avg       0.97      0.97      0.97      1000

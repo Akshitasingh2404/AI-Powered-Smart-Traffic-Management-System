@@ -1,0 +1,231 @@
+/* Global Variables and Dark Theme System */
+:root {
+    --bg-dark: #090d16;
+    --bg-card: rgba(17, 25, 40, 0.75);
+    --border-card: rgba(255, 255, 255, 0.08);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-blue: #3b82f6;
+    --accent-blue-glow: rgba(59, 130, 246, 0.5);
+    --signal-red: #ef4444;
+    --signal-yellow: #f59e0b;
+    --signal-green: #10b981;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* Glassmorphism Card Style */
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Header and Navigation */
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--text-primary) !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Stat Cards & Mini Indicators */
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 8px;
+    background: linear-gradient(to right, #ffffff, #e2e8f0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-icon {
+    font-size: 1.5rem;
+    color: var(--accent-blue);
+    padding: 10px;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 10px;
+}
+
+/* Traffic Signals Widget */
+.traffic-signal-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #1e1e24;
+    border-radius: 30px;
+    width: 90px;
+    box-shadow: inset 0 4px 10px rgba(0,0,0,0.6);
+}
+
+.signal-light {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #333;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.signal-light.red.active {
+    background-color: var(--signal-red);
+    box-shadow: 0 0 25px var(--signal-red), inset 0 2px 2px rgba(255,255,255,0.4);
+}
+
+.signal-light.yellow.active {
+    background-color: var(--signal-yellow);
+    box-shadow: 0 0 25px var(--signal-yellow), inset 0 2px 2px rgba(255,255,255,0.4);
+}
+
+.signal-light.green.active {
+    background-color: var(--signal-green);
+    box-shadow: 0 0 25px var(--signal-green), inset 0 2px 2px rgba(255,255,255,0.4);
+}
+
+/* Control Toggle Buttons */
+.btn-toggle {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-card);
+    color: var(--text-secondary);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.btn-toggle.active {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border-color: #3b82f6;
+    color: white;
+    box-shadow: 0 0 15px var(--accent-blue-glow);
+}
+
+/* Live Video Container */
+.video-wrapper {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border-card);
+    background: #000;
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.5);
+}
+
+.video-feed {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.video-overlay-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(239, 68, 68, 0.85);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+    animation: pulse 1.5s infinite alternate;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+/* Alert Banner styling */
+.emergency-alert-banner {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    color: #fca5a5;
+    font-weight: 500;
+}
+
+.accident-alert-banner {
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    color: #fcd34d;
+    font-weight: 500;
+}
+
+/* Logs and History Table */
+.custom-table {
+    color: var(--text-primary);
+}
+
+.custom-table th {
+    border-bottom: 2px solid var(--border-card);
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.custom-table td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 12px 8px;
+    vertical-align: middle;
+}
+
+/* Custom Scrollbar for modern look */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}

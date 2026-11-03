@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Traffic Management - Database Logs</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent border-bottom border-secondary border-opacity-10 py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <i class="bi bi-cpu-fill me-2 fs-4 text-primary"></i>
+                <span>Antigravity Traffic AI</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-speedometer2 me-1"></i> Live Feed</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analytics"><i class="bi bi-bar-chart-line me-1"></i> Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/history"><i class="bi bi-database me-1"></i> History Logs</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-5">
+            <div>
+                <h2 class="fw-bold m-0"><i class="bi bi-database-fill me-2 text-primary"></i> Operational Logs</h2>
+                <p class="text-secondary m-0">Inspect historical traffic stats and signals adjustments compiled per second.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="/download?type=csv" class="btn btn-outline-light rounded-3 px-3"><i class="bi bi-filetype-csv me-1 text-success"></i> Download CSV</a>
+                <a href="/download?type=pdf" class="btn btn-primary rounded-3 px-3"><i class="bi bi-file-earmark-pdf-fill me-1"></i> Download PDF Report</a>
+            </div>
+        </div>
+
+        <!-- Logs Table Card -->
+        <div class="glass-card">
+            <h5 class="mb-4 fw-bold"><i class="bi bi-table me-2 text-primary"></i> SQLite Log History (Last 100 Entries)</h5>
+            
+            {% if not logs %}
+            <div class="text-center py-5">
+                <i class="bi bi-database-exclamation text-secondary fs-1 mb-3 d-block"></i>
+                <p class="text-secondary">No traffic records found in the database. Run the live stream to compile traffic metrics logs.</p>
+            </div>
+            {% else %}
+            <div class="table-responsive" style="max-height: 550px; overflow-y: auto;">
+                <table class="table table-dark table-hover custom-table m-0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th>Timestamp</th>
+                            <th class="text-center">Count</th>
+                            <th class="text-center">Cars</th>
+                            <th class="text-center">Bikes</th>
+                            <th class="text-center">Buses</th>
+                            <th class="text-center">Trucks</th>
+                            <th class="text-center">Density</th>
+                            <th class="text-center">Congestion Level</th>
+                            <th class="text-center">Green / Yellow / Red</th>
+                            <th class="text-center">Wait</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in logs %}
+                        <tr>
+                            <td class="text-center text-secondary small">{{ row.id }}</td>
+                            <td class="small">{{ row.timestamp }}</td>
+                            <td class="text-center fw-bold text-white">{{ row.vehicle_count }}</td>
+                            <td class="text-center text-info">{{ row.car_count }}</td>
+                            <td class="text-center text-success">{{ row.bike_count }}</td>
+                            <td class="text-center text-warning">{{ row.bus_count }}</td>
+                            <td class="text-center text-secondary">{{ row.truck_count }}</td>
+                            <td class="text-center">{{ row.density }}%</td>
+                            <td class="text-center">
+                                {% if row.congestion_level == 'Heavy Traffic' %}
+                                <span class="badge bg-danger bg-opacity-20 text-danger border border-danger border-opacity-30 px-2.5 py-1">Heavy</span>
+                                {% elif row.congestion_level == 'Moderate Traffic' %}
+                                <span class="badge bg-warning bg-opacity-20 text-warning border border-warning border-opacity-30 px-2.5 py-1">Moderate</span>
+                                {% elif row.congestion_level == 'Light Traffic' %}
+                                <span class="badge bg-info bg-opacity-20 text-info border border-info border-opacity-30 px-2.5 py-1">Light</span>
+                                {% else %}
+                                <span class="badge bg-success bg-opacity-20 text-success border border-success border-opacity-30 px-2.5 py-1">No Traffic</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center small">
+                                <span class="text-success">{{ row.green_time }}s</span> / 
+                                <span class="text-warning">{{ row.yellow_time }}s</span> / 
+                                <span class="text-danger">{{ row.red_time }}s</span>
+                            </td>
+                            <td class="text-center fw-bold text-light">{{ row.average_wait }}s</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
